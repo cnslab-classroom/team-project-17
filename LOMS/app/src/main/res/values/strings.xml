@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">LOMS</string>
+    <string name="goallist">목표 보기</string>
+    <string name="logout">로그아웃</string>
+</resources>
