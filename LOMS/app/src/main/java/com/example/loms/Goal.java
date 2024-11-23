@@ -1,6 +1,7 @@
 package com.example.loms;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class Goal implements Serializable {
     private String id;
@@ -19,6 +20,15 @@ public class Goal implements Serializable {
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    // New constructor for title and description only
+    public Goal(String title, String description) {
+        this.id = UUID.randomUUID().toString(); // Generate unique ID
+        this.title = title;
+        this.description = description;
+        this.startDate = ""; // Default value for startDate
+        this.endDate = "";   // Default value for endDate
     }
 
     public String getId() {

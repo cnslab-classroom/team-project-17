@@ -23,17 +23,15 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true"/>
-
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"/>
-
-        <activity
-            android:name=".SignUpActivity"
-            android:exported="true"/>
+        <activity android:name=".LoginActivity" android:exported="true"/>
+        <activity android:name=".MainActivity" android:exported="true"/>
+        <activity android:name=".SignUpActivity" android:exported="true"/>
+        <activity android:name=".GoalListActivity" android:exported="true"/>
+        <activity android:name=".GoalDetailActivity" android:exported="true"/>
+        <activity android:name=".DashboardActivity" android:exported="true"/>
+        <activity android:name=".ProgressChart" android:exported="true"/>
+        <activity android:name=".SettingsActivity" android:exported="true"/>
+        <activity android:name=".NewGoalActivity" android:exported="true"/>
 
     </application>
 </manifest>

@@ -1,6 +1,5 @@
 package com.example.loms;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,8 +35,6 @@ public class SignUpActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(FirebaseUser user) {
                     Toast.makeText(SignUpActivity.this, "Signup successful!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                    startActivity(intent);
                     finish(); // Return to the previous activity
                 }
 

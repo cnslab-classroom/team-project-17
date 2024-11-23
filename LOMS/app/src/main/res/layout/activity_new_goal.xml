@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- 목표 제목 입력 -->
+    <EditText
+        android:id="@+id/goalTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Goal Title"
+        android:inputType="text"
+        android:layout_marginBottom="8dp" />
+
+    <!-- 목표 설명 입력 -->
+    <EditText
+        android:id="@+id/goalDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Goal Description"
+        android:inputType="text"
+        android:layout_marginBottom="8dp" />
+
+    <!-- 목표 저장 버튼 -->
+    <Button
+        android:id="@+id/saveGoalButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Goal"
+        android:backgroundTint="@color/purple_500"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>
