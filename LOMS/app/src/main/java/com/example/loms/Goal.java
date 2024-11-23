@@ -9,28 +9,39 @@ public class Goal implements Serializable {
     private String description;
     private String startDate;
     private String endDate;
+    private int currentWeek; // 현재 주차
+    private int finalWeek;   // 최종 주차
+    private int progress;    // 진행도 (%)
 
     public Goal() {
         // Default constructor for Firebase
     }
 
-    public Goal(String id, String title, String description, String startDate, String endDate) {
+    // Constructor with all fields
+    public Goal(String id, String title, String description, String startDate, String endDate, int currentWeek, int finalWeek, int progress) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.currentWeek = currentWeek;
+        this.finalWeek = finalWeek;
+        this.progress = progress;
     }
 
-    // New constructor for title and description only
-    public Goal(String title, String description) {
+    // Constructor for title, description, and week-related fields
+    public Goal(String title, String description, int currentWeek, int finalWeek, int progress) {
         this.id = UUID.randomUUID().toString(); // Generate unique ID
         this.title = title;
         this.description = description;
+        this.currentWeek = currentWeek;
+        this.finalWeek = finalWeek;
+        this.progress = progress;
         this.startDate = ""; // Default value for startDate
         this.endDate = "";   // Default value for endDate
     }
 
+    // Getters and Setters
     public String getId() {
         return id;
     }
@@ -69,5 +80,29 @@ public class Goal implements Serializable {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public int getCurrentWeek() {
+        return currentWeek;
+    }
+
+    public void setCurrentWeek(int currentWeek) {
+        this.currentWeek = currentWeek;
+    }
+
+    public int getFinalWeek() {
+        return finalWeek;
+    }
+
+    public void setFinalWeek(int finalWeek) {
+        this.finalWeek = finalWeek;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
 }

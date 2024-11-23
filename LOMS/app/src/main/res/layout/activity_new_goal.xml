@@ -23,6 +23,24 @@
         android:inputType="text"
         android:layout_marginBottom="8dp" />
 
+    <!-- 현재 주차 입력 -->
+    <EditText
+        android:id="@+id/currentWeek"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Current Week"
+        android:inputType="number"
+        android:layout_marginBottom="8dp" />
+
+    <!-- 최종 주차 입력 -->
+    <EditText
+        android:id="@+id/finalWeek"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Final Week"
+        android:inputType="number"
+        android:layout_marginBottom="16dp" />
+
     <!-- 목표 저장 버튼 -->
     <Button
         android:id="@+id/saveGoalButton"
@@ -30,6 +48,8 @@
         android:layout_height="wrap_content"
         android:text="Save Goal"
         android:backgroundTint="@color/purple_500"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:padding="12dp"
+        android:textSize="16sp" />
 
 </LinearLayout>
