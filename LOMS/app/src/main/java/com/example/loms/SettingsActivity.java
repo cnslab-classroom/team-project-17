@@ -3,29 +3,50 @@ package com.example.loms;
 import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SettingsActivity extends AppCompatActivity {
+    private static final String NOTIFICATIONS_ENABLED_KEY = "notificationsEnabled";
+
     private LocalDatabaseManager localDatabaseManager;
-    private Switch notificationsSwitch; // Switch 객체 선언
+    private Switch notificationsSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings); // 레이아웃 설정
+        setContentView(R.layout.activity_settings);
 
+        // Initialize LocalDatabaseManager
         localDatabaseManager = new LocalDatabaseManager(this);
 
-        // Switch 초기화
+        // Initialize Switch
         notificationsSwitch = findViewById(R.id.notificationsSwitch);
 
-        // 기본값을 처리하여 NullPointerException 방지
-        String notificationsEnabled = localDatabaseManager.getString("notificationsEnabled");
-        notificationsSwitch.setChecked("true".equals(notificationsEnabled != null ? notificationsEnabled : "false"));
+        // Load saved notification setting
+        boolean isNotificationsEnabled = Boolean.parseBoolean(
+                localDatabaseManager.getString(NOTIFICATIONS_ENABLED_KEY, "false"));
+        notificationsSwitch.setChecked(isNotificationsEnabled);
 
-        // Switch 상태 변경 시 데이터 저장
-        notificationsSwitch.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
-            localDatabaseManager.saveString("notificationsEnabled", isChecked ? "true" : "false");
-        });
+        // Listen for changes in the switch state
+        notificationsSwitch.setOnCheckedChangeListener(this::onNotificationSwitchChanged);
+    }
+
+    /**
+     * Handles changes to the notification switch.
+     *
+     * @param buttonView The switch button view.
+     * @param isChecked  The new state of the switch.
+     */
+    private void onNotificationSwitchChanged(CompoundButton buttonView, boolean isChecked) {
+        // Save new notification state to local database
+        localDatabaseManager.saveString(NOTIFICATIONS_ENABLED_KEY, String.valueOf(isChecked));
+
+        // Show a feedback message to the user
+        String message = isChecked ?
+                getString(R.string.notifications_enabled) :
+                getString(R.string.notifications_disabled);
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

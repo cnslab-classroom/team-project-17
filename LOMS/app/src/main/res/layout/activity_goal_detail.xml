@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
+    <!-- Goal Title -->
     <TextView
         android:id="@+id/goalTitle"
         android:layout_width="wrap_content"
@@ -13,6 +15,7 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
+    <!-- Goal Description -->
     <TextView
         android:id="@+id/goalDescription"
         android:layout_width="wrap_content"
@@ -23,16 +26,7 @@
         android:text="Goal Description"
         android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/goalDates"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/goalDescription"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
-        android:text="Start Date - End Date"
-        android:textSize="14sp" />
-        
+    <!-- Goal Date -->
     <TextView
         android:id="@+id/goalDate"
         android:layout_width="wrap_content"
@@ -43,5 +37,26 @@
         android:text="Start Date - End Date"
         android:textSize="14sp" />
 
-</RelativeLayout>
+    <!-- Goal Progress -->
+    <TextView
+        android:id="@+id/goalProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/goalDate"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:text="Progress: 0%"
+        android:textSize="14sp" />
 
+    <!-- Goal Week -->
+    <TextView
+        android:id="@+id/goalWeek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/goalProgress"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:text="Week: 0 / 0"
+        android:textSize="14sp" />
+
+</RelativeLayout>

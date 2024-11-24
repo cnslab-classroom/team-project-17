@@ -1,7 +1,44 @@
 <resources>
     <string name="app_name">LOMS</string>
-    <string name="goallist">Goal List</string>
+    <string name="goal_list">Goal List</string>
     <string name="logout">Logout</string>
     <string name="login">Login</string>
     <string name="signup">Sign Up</string>
+    <string name="settings">Settings</string>
+    <string name="friend_management">Friend Management</string>
+    <string name="chat">Chat</string>
+    <string name="goals">Goals</string>
+    <string name="manage_friends">Manage Friends</string>
+    <string name="dashboard_title">Dashboard</string>
+
+    <!-- MainActivity 관련 리소스 -->
+    <string name="default_welcome_message">Welcome to LOMS!</string>
+    <string name="welcome_message">Welcome, %1$s!</string>
+    <string name="logged_out_message">You have been logged out successfully.</string>
+    <string name="login_success">Login successful!</string>
+    <string name="login_failed">Login failed: %1$s</string>
+    <string name="invalid_email">Please enter a valid email address.</string>
+    <string name="empty_password">Password cannot be empty.</string>
+    <!-- NewGoalActivity 관련 리소스 -->
+    <string name="user_not_logged_in">User is not logged in. Please login again.</string>
+    <string name="invalid_week_values">Current week cannot be greater than final week.</string>
+    <string name="goal_saved">Goal saved successfully!</string>
+    <string name="error_saving_goal">Error saving goal: %1$s</string>
+    <string name="fill_all_fields">Please fill out all fields.</string>
+    <string name="invalid_number_format">Week values must be valid numbers.</string>
+    <!-- ProgressChart 관련 문자열 -->
+    <string name="completed">Completed</string>
+    <string name="remaining">Remaining</string>
+    <string name="progress">Progress</string>
+    <string name="progress_chart_title">Progress Chart</string>
+    <!-- SettingsActivity 관련 문자열 -->
+    <string name="notifications_enabled">Notifications enabled</string>
+    <string name="notifications_disabled">Notifications disabled</string>
+    <!-- SignUpActivity 관련 문자열-->
+    <string name="signup_failed">Sign-up failed: %1$s</string>
+    <string name="invalid_email_format">Invalid email format</string>
+    <string name="password_too_short">Password must be at least 6 characters long</string>
+    <string name="signup_successful">Sign-up successful</string>
+    <string name="firestore_error">Firestore error: %1$s</string>\
 </resources>
+

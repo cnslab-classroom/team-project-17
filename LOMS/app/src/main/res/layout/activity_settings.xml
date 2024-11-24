@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/white">
 
     <!-- 알림 설정을 위한 스위치 -->
     <Switch
@@ -11,5 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Enable Notifications"
-        android:checked="true" />
+        android:checked="true"
+        android:textColor="@android:color/holo_purple" />
 </LinearLayout>

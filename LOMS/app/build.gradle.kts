@@ -44,6 +44,8 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx") // Firestore 라이브러리
     implementation("com.google.firebase:firebase-analytics-ktx") // Firebase Analytics 라이브러리
     implementation("com.google.firebase:firebase-auth-ktx") // Firebase Authentication 라이브러리
+    implementation("com.google.firebase:firebase-database-ktx")
+
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

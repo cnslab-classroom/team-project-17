@@ -32,6 +32,8 @@
         <activity android:name=".ProgressChart" android:exported="true"/>
         <activity android:name=".SettingsActivity" android:exported="true"/>
         <activity android:name=".NewGoalActivity" android:exported="true"/>
+        <activity android:name=".ChatActivity" android:exported="true"/>
+        <activity android:name=".FriendActivity" android:exported="true"/>
 
     </application>
 </manifest>

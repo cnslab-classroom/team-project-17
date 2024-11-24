@@ -11,38 +11,85 @@ public class RemoteDatabaseManager {
         firestore = FirebaseFirestore.getInstance();
     }
 
-    // 목표 추가 메서드
-    public void addGoal(String userId, String title, Goal goal, RemoteCallback callback) {
-        firestore.collection("Goals")
+    /**
+     * Adds or updates a goal in Firestore.
+     *
+     * @param userId   The user's ID.
+     * @param goal     The goal object to be added or updated.
+     * @param callback The callback to handle success or failure.
+     */
+    public void saveGoal(String userId, Goal goal, RemoteCallback<String> callback) {
+        if (userId == null || goal == null || goal.getTitle() == null) {
+            callback.onFailure("Invalid input: User ID or Goal data is null.");
+            return;
+        }
+
+        firestore.collection("Users")
                 .document(userId)
-                .collection("title")
-                .document(title)
+                .collection("Goals")
+                .document(goal.getTitle())
                 .set(goal)
-                .addOnSuccessListener(aVoid -> callback.onSuccess("Goal added successfully"))
-                .addOnFailureListener(e -> callback.onFailure(e.getMessage()));
+                .addOnSuccessListener(aVoid -> callback.onSuccess("Goal saved successfully"))
+                .addOnFailureListener(e -> callback.onFailure("Error saving goal: " + e.getMessage()));
     }
 
-    // 사용자별 목표 가져오기 메서드
-    public void getGoals(String userId, RemoteCallback callback) {
-        firestore.collection("Goals")
-                .document(userId) // 사용자 ID 문서 접근
-                .collection("title") // title 서브컬렉션 접근
+    /**
+     * Retrieves all goals for a specific user.
+     *
+     * @param userId   The user's ID.
+     * @param callback The callback to handle the result.
+     */
+    public void getGoals(String userId, RemoteCallback<ArrayList<Goal>> callback) {
+        if (userId == null) {
+            callback.onFailure("Invalid input: User ID is null.");
+            return;
+        }
+
+        firestore.collection("Users")
+                .document(userId)
+                .collection("Goals")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         ArrayList<Goal> goals = new ArrayList<>();
                         task.getResult().forEach(document -> goals.add(document.toObject(Goal.class)));
                         callback.onSuccess(goals);
-                    } else {
-                        callback.onFailure(task.getException().getMessage());
+                    } else if (task.getException() != null) {
+                        callback.onFailure("Error retrieving goals: " + task.getException().getMessage());
                     }
                 })
-                .addOnFailureListener(e -> callback.onFailure(e.getMessage()));
+                .addOnFailureListener(e -> callback.onFailure("Error retrieving goals: " + e.getMessage()));
     }
 
-    // RemoteCallback 인터페이스 정의
-    public interface RemoteCallback {
-        void onSuccess(Object result);
+    /**
+     * Deletes a specific goal.
+     *
+     * @param userId    The user's ID.
+     * @param goalTitle The title of the goal to delete.
+     * @param callback  The callback to handle success or failure.
+     */
+    public void deleteGoal(String userId, String goalTitle, RemoteCallback<String> callback) {
+        if (userId == null || goalTitle == null) {
+            callback.onFailure("Invalid input: User ID or Goal Title is null.");
+            return;
+        }
+
+        firestore.collection("Users")
+                .document(userId)
+                .collection("Goals")
+                .document(goalTitle)
+                .delete()
+                .addOnSuccessListener(aVoid -> callback.onSuccess("Goal deleted successfully"))
+                .addOnFailureListener(e -> callback.onFailure("Error deleting goal: " + e.getMessage()));
+    }
+
+    /**
+     * Generic interface for remote callbacks.
+     *
+     * @param <T> The type of the result object.
+     */
+    public interface RemoteCallback<T> {
+        void onSuccess(T result);
         void onFailure(String errorMessage);
     }
 }

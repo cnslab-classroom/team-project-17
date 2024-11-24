@@ -1,55 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- 목표 제목 입력 -->
     <EditText
         android:id="@+id/goalTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Goal Title"
-        android:inputType="text"
-        android:layout_marginBottom="8dp" />
+        android:hint="Goal Title" />
 
-    <!-- 목표 설명 입력 -->
     <EditText
         android:id="@+id/goalDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Goal Description"
-        android:inputType="text"
-        android:layout_marginBottom="8dp" />
+        android:hint="Goal Description" />
 
-    <!-- 현재 주차 입력 -->
     <EditText
         android:id="@+id/currentWeek"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Current Week"
-        android:inputType="number"
-        android:layout_marginBottom="8dp" />
+        android:hint="Current Week"
+        android:inputType="number" />
 
-    <!-- 최종 주차 입력 -->
     <EditText
         android:id="@+id/finalWeek"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Final Week"
-        android:inputType="number"
-        android:layout_marginBottom="16dp" />
+        android:hint="Final Week"
+        android:inputType="number" />
 
-    <!-- 목표 저장 버튼 -->
     <Button
         android:id="@+id/saveGoalButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save Goal"
-        android:backgroundTint="@color/purple_500"
-        android:textColor="@android:color/white"
-        android:padding="12dp"
-        android:textSize="16sp" />
+        android:text="Save Goal" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 </LinearLayout>

@@ -4,20 +4,24 @@ import java.io.Serializable;
 import java.util.UUID;
 
 public class Goal implements Serializable {
-    private String id;
-    private String title;
-    private String description;
-    private String startDate;
-    private String endDate;
-    private int currentWeek; // 현재 주차
-    private int finalWeek;   // 최종 주차
-    private int progress;    // 진행도 (%)
+    private String id;          // Unique ID
+    private String title;       // Title of the goal
+    private String description; // Description of the goal
+    private String startDate;   // Start date
+    private String endDate;     // End date
+    private int currentWeek;    // Current week
+    private int finalWeek;      // Final week
+    private int progress;       // Progress percentage
 
+    /**
+     * Default constructor (required for Firebase).
+     */
     public Goal() {
-        // Default constructor for Firebase
     }
 
-    // Constructor with all fields
+    /**
+     * Constructor with all fields.
+     */
     public Goal(String id, String title, String description, String startDate, String endDate, int currentWeek, int finalWeek, int progress) {
         this.id = id;
         this.title = title;
@@ -29,19 +33,19 @@ public class Goal implements Serializable {
         this.progress = progress;
     }
 
-    // Constructor for title, description, and week-related fields
+    /**
+     * Constructor with ID auto-generation.
+     */
     public Goal(String title, String description, int currentWeek, int finalWeek, int progress) {
-        this.id = UUID.randomUUID().toString(); // Generate unique ID
+        this.id = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
         this.currentWeek = currentWeek;
         this.finalWeek = finalWeek;
         this.progress = progress;
-        this.startDate = ""; // Default value for startDate
-        this.endDate = "";   // Default value for endDate
     }
 
-    // Getters and Setters
+    // Getters & Setters
     public String getId() {
         return id;
     }
@@ -87,6 +91,9 @@ public class Goal implements Serializable {
     }
 
     public void setCurrentWeek(int currentWeek) {
+        if (currentWeek < 0 || currentWeek > finalWeek) {
+            throw new IllegalArgumentException("Current week must be between 0 and final week.");
+        }
         this.currentWeek = currentWeek;
     }
 
@@ -95,6 +102,9 @@ public class Goal implements Serializable {
     }
 
     public void setFinalWeek(int finalWeek) {
+        if (finalWeek <= 0) {
+            throw new IllegalArgumentException("Final week must be greater than 0.");
+        }
         this.finalWeek = finalWeek;
     }
 
@@ -103,6 +113,44 @@ public class Goal implements Serializable {
     }
 
     public void setProgress(int progress) {
+        if (progress < 0 || progress > 100) {
+            throw new IllegalArgumentException("Progress must be between 0 and 100.");
+        }
         this.progress = progress;
+    }
+
+    /**
+     * Checks if the goal is completed.
+     *
+     * @return True if progress is 100%, false otherwise.
+     */
+    public boolean isCompleted() {
+        return progress == 100;
+    }
+
+    /**
+     * Updates the progress of the goal.
+     *
+     * @param completedWeeks The number of weeks completed.
+     */
+    public void updateProgress(int completedWeeks) {
+        if (completedWeeks < 0 || completedWeeks > finalWeek) {
+            throw new IllegalArgumentException("Completed weeks must be between 0 and final week.");
+        }
+        this.progress = (int) (((double) completedWeeks / finalWeek) * 100);
+    }
+
+    @Override
+    public String toString() {
+        return "Goal{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", currentWeek=" + currentWeek +
+                ", finalWeek=" + finalWeek +
+                ", progress=" + progress +
+                '}';
     }
 }

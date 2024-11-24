@@ -2,59 +2,125 @@ package com.example.loms;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
-import com.google.firebase.auth.FirebaseUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseUser;
+
 public class LoginActivity extends AppCompatActivity {
     private EditText emailField, passwordField;
-    private Button loginButton, signUpButton; // 회원가입 버튼 추가
+    private Button loginButton, signUpButton;
+    private ProgressBar progressBar;
     private AuthManager authManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login); // Ensure this layout exists
+        setContentView(R.layout.activity_login);
 
-        emailField = findViewById(R.id.emailField); // R.id.뭐시기 부분은 xml파일에 버튼이나 입력창 같은거랑 연결된 부분. 세부적 내용은
-        passwordField = findViewById(R.id.passwordField); // 파일마다 xml코드에 나와있으니 참고
+        // Initialize UI components
+        emailField = findViewById(R.id.emailField);
+        passwordField = findViewById(R.id.passwordField);
         loginButton = findViewById(R.id.loginButton);
-        signUpButton = findViewById(R.id.signUpButton); // 버튼 초기화
+        signUpButton = findViewById(R.id.signUpButton);
+        progressBar = findViewById(R.id.progressBar); // 로딩 상태 표시
+
         authManager = new AuthManager();
 
-        loginButton.setOnClickListener(v -> {
-            String email = emailField.getText().toString();  // String값 받는 부분이고 이건 collection이 아니라 사용자 정보
-            String password = passwordField.getText().toString();  // collection 생성 및 정보 기입은 New Goal 부분에 있음
+        // Auto-login if user is already authenticated
+        autoLogin();
 
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show(); // 입력창 비어있으면 경고문구 띄우기
+        // Login button click listener
+        loginButton.setOnClickListener(v -> {
+            String email = emailField.getText().toString().trim();
+            String password = passwordField.getText().toString().trim();
+
+            if (!validateInputs(email, password)) {
                 return;
             }
+
+            // Show progress bar and disable inputs
+            showLoading(true);
 
             authManager.signIn(email, password, new AuthManager.AuthCallback() {
                 @Override
                 public void onSuccess(FirebaseUser user) {
-                    Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                    // Navigate to the main activity
-
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class); // LoginActivity(현재 화면)에서 MainActivity(다음 화면)으로 이동
-                    startActivity(intent);
+                    showLoading(false);
+                    Toast.makeText(LoginActivity.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
+                    navigateToMain();
                 }
 
                 @Override
                 public void onFailure(Exception e) {
-                    Toast.makeText(LoginActivity.this, "Login failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    showLoading(false);
+                    Toast.makeText(LoginActivity.this, getString(R.string.login_failed, e.getMessage()), Toast.LENGTH_SHORT).show();
                 }
             });
         });
 
+        // Sign-up button click listener
         signUpButton.setOnClickListener(v -> {
-            // 회원가입 화면으로 이동
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
         });
+    }
+
+    /**
+     * Automatically logs in if the user is already authenticated.
+     */
+    private void autoLogin() {
+        FirebaseUser currentUser = authManager.getCurrentUser();
+        if (currentUser != null) {
+            navigateToMain();
+        }
+    }
+
+    /**
+     * Navigates to the main activity.
+     */
+    private void navigateToMain() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish(); // Prevent back navigation to login screen
+    }
+
+    /**
+     * Validates the input fields.
+     *
+     * @param email    The user's email.
+     * @param password The user's password.
+     * @return True if inputs are valid, false otherwise.
+     */
+    private boolean validateInputs(String email, String password) {
+        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailField.setError(getString(R.string.invalid_email));
+            emailField.requestFocus();
+            return false;
+        }
+
+        if (password.isEmpty()) {
+            passwordField.setError(getString(R.string.empty_password));
+            passwordField.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Shows or hides the loading indicator.
+     *
+     * @param isLoading True to show loading, false to hide.
+     */
+    private void showLoading(boolean isLoading) {
+        progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        loginButton.setEnabled(!isLoading);
+        signUpButton.setEnabled(!isLoading);
     }
 }
