@@ -31,6 +31,12 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
     public void onBindViewHolder(@NonNull GoalViewHolder holder, int position) {
         Goal goal = goals.get(position);
         holder.title.setText(goal.getTitle());
+
+        // Set progress visualization
+        ProgressDrawable progressDrawable = new ProgressDrawable(goal.getProgress());
+        progressDrawable.setBounds(0, 0, holder.progressCircle.getWidth(), holder.progressCircle.getHeight());
+        holder.progressCircle.setBackground(progressDrawable);
+
         holder.itemView.setOnClickListener(v -> {
             if (onGoalClickListener != null) onGoalClickListener.onClick(goal);
         });
@@ -63,10 +69,16 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
 
     static class GoalViewHolder extends RecyclerView.ViewHolder {
         private final TextView title;
+        private final View progressCircle;
 
         public GoalViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.goalTitle); // Ensure this ID matches your `item_goal.xml`
+            title = itemView.findViewById(R.id.goalTitle);
+            progressCircle = itemView.findViewById(R.id.progressCircle); // Ensure this matches your layout
         }
     }
+
+
+    //---밑에는 추가된 부분---
+
 }
