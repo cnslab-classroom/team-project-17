@@ -23,5 +23,11 @@
         android:text="Description (Optional)"
         android:textSize="14sp"
         android:textColor="@android:color/darker_gray" />
+    <View
+        android:id="@+id/progressCircle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/progress_circle_placeholder" />
 
 </LinearLayout>
