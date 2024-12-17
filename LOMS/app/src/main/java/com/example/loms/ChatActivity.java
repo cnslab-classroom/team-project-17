@@ -1,6 +1,7 @@
 package com.example.loms;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,20 +63,14 @@ public class ChatActivity extends AppCompatActivity {
             return;
         }
 
-        // Save message to Firebase
-        String messageId = chatDatabase.push().getKey();
-        if (messageId != null) {
-            chatDatabase.child(messageId).setValue(message)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            messages.add(message);
-                            chatAdapter.notifyItemInserted(messages.size() - 1);
-                            chatRecyclerView.scrollToPosition(messages.size() - 1);
-                            messageInput.setText(""); // Clear input field
-                        } else {
-                            Toast.makeText(this, "Failed to send message", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
+        // 메시지를 로컬 리스트에 추가
+        messages.add(message);
+        chatAdapter.notifyItemInserted(messages.size() - 1);
+
+        // 스크롤을 가장 아래로 이동
+        chatRecyclerView.scrollToPosition(messages.size() - 1);
+
+        // 입력 필드 초기화
+        messageInput.setText("");
     }
 }
